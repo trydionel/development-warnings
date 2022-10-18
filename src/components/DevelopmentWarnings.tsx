@@ -61,18 +61,19 @@ export const DevelopmentWarnings = ({ record }: DevelopmentWarningProps) => {
     <h5>
       Found {warnings.length} development warnings
       &nbsp;
-      <aha-tooltip-default-trigger trigger="development-trigger-info" />
+      <span>
+        <aha-tooltip-default-trigger trigger="development-trigger-info" />
+        <aha-tooltip placement="bottom" id="development-trigger-info">
+          <strong className="mr-2">What is this?</strong>
+          This extension is exploring concepts from <br />
+          https://big.aha.io/features/A-14541. Please send feedback to Jeff.
+        </aha-tooltip>
+      </span>
     </h5>
 
-    <aha-tooltip placement="bottom" id="development-trigger-info">
-      <strong className="mr-2">What is this?</strong>
-      This extension is exploring concepts from <br />
-      https://big.aha.io/features/A-14541. Please send feedback to Jeff.
-    </aha-tooltip>
-
     {
-      warnings.map(([r, w]) => (
-        <Warning record={r} warning={w} />
+      warnings.map(([r, w], i) => (
+        <Warning record={r} warning={w} key={i} />
       ))
     }
 
