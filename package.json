@@ -1,0 +1,31 @@
+{
+  "name": "trydionel.development-warnings",
+  "description": "Development warnings",
+  "version": "0.0.0",
+  "author": "trydionel",
+  "repository": {
+    "type": "git",
+    "url": "TODO: Add the GitHub URL to your extension in package.json"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^16.8.0"
+  },
+  "ahaExtension": {
+    "contributes": {
+      "views": {
+        "warnings": {
+          "title": "Warnings",
+          "entryPoint": "src/views/warnings.js",
+          "host": "attribute",
+          "recordTypes": [
+            "Feature",
+            "Requirement",
+            "Epic",
+            "Release"
+          ]
+        }
+      }
+    }
+  }
+}
