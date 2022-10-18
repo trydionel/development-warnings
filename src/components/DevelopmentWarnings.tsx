@@ -58,11 +58,23 @@ export const DevelopmentWarnings = ({ record }: DevelopmentWarningProps) => {
   if (warnings.length === 0) return <span className="text-muted">No warnings</span>
 
   return <>
-    <h5>Found {warnings.length} development warnings</h5>
+    <h5>
+      Found {warnings.length} development warnings
+      &nbsp;
+      <aha-tooltip-default-trigger trigger="development-trigger-info" />
+    </h5>
+
+    <aha-tooltip placement="bottom" id="development-trigger-info">
+      <strong className="mr-2">What is this?</strong>
+      This extension is exploring concepts from <br />
+      https://big.aha.io/features/A-14541. Please send feedback to Jeff.
+    </aha-tooltip>
+
     {
       warnings.map(([r, w]) => (
         <Warning record={r} warning={w} />
       ))
     }
+
   </>
 }
