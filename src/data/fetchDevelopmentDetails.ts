@@ -1,5 +1,5 @@
-function subquery(typename, query) {
-  const fields = ['referenceNum', 'path']
+function withDevelopmentDetails(typename, query) {
+  const fields = ['id', 'referenceNum', 'name', 'path']
 
   if (typename != 'Requirement') {
     fields.push('startDate', 'dueDate')
@@ -26,10 +26,10 @@ export async function fetchDevelopmentData(record: Aha.RecordUnion): Promise<Aha
   }
 
   return await record.reload({
-    query: subquery(record.typename, record.query)
+    query: withDevelopmentDetails(record.typename, record.query)
   })
 }
 
 export async function fetchChildRecords(release: Aha.Release) {
-  return await subquery('Feature', aha.models.Feature).where({ releaseId: release.id }).all()
+  return await withDevelopmentDetails('Feature', aha.models.Feature).where({ releaseId: release.id }).all()
 }

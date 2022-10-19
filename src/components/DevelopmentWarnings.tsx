@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { groupBy } from 'lodash'
 import { analyzeDevelopmentDetails, DevelopmentWarning, DevelopmentWarningTuple } from "../data/analyzeDevelopmentDetails";
 import { fetchChildRecords, fetchDevelopmentData } from "../data/fetchDevelopmentDetails";
 
@@ -13,7 +14,7 @@ const WarningLabels: Record<DevelopmentWarning, (record: Aha.RecordUnion) => str
   DELAYING_LAUNCH: (record) => `is past the release launch (${record.release.releaseDate})`
 }
 
-const Warning = ({ record, warning }) => {
+const Warning = ({ record, children }) => {
   const openDrawer = (e) => {
     e.preventDefault();
     aha.drawer.showRecord(record);
@@ -23,8 +24,45 @@ const Warning = ({ record, warning }) => {
     <aha-icon icon="fa-regular fa-warning" style={{ color: "var(--aha-orange-600)", marginRight: 4 }} />
     <a href={record.path} onClick={openDrawer}>{record.referenceNum}</a>
     &nbsp;
-    {WarningLabels[warning](record) || warning}
+    {children}
   </div>
+}
+
+const WarningList = ({ warnings }) => {
+  return warnings.map(([r, w], i) => (
+    <Warning record={r} key={i}>
+      {WarningLabels[w](r) || w}
+    </Warning>
+  ))
+}
+
+const WarningHeaders: Record<DevelopmentWarning, string> = {
+  NO_ASSIGNEE: 'No assignee',
+  NO_DUE_DATE: 'No start date',
+  NO_START_DATE: 'No due date',
+  NO_ESTIMATE: 'No estimate',
+  NO_TEAM: 'No team',
+  LATE_START: 'Late to start',
+  PAST_DUE: 'Past due',
+  DELAYING_LAUNCH: 'Delaying launch'
+}
+
+const GroupedWarnings = ({ warnings }) => {
+  const grouped = groupBy(warnings, ([record, warning]) => warning)
+
+  return <>
+    {Object.keys(grouped).map((group) => (
+      <div className="mb-6">
+        <h5>{WarningHeaders[group]}</h5>
+        {grouped[group].map(([record, _], i) => (
+          <Warning record={record} key={i}>
+            {record.name}
+          </Warning>
+        ))}
+      </div>
+    ))
+    }
+  </>
 }
 
 interface DevelopmentWarningProps {
@@ -34,10 +72,11 @@ interface DevelopmentWarningProps {
 export const DevelopmentWarnings = ({ record }: DevelopmentWarningProps) => {
   const [warnings, setWarnings] = useState<DevelopmentWarningTuple[]>([])
   const [loading, setLoading] = useState<Boolean>(true)
+  const isRelease = record.typename === 'Release'
 
   useEffect(() => {
     (async () => {
-      if (record.typename === 'Release') {
+      if (isRelease) {
         const features = await fetchChildRecords(record)
         let warnings = features.reduce((arr, f) => {
           arr.push(...analyzeDevelopmentDetails(f))
@@ -55,8 +94,6 @@ export const DevelopmentWarnings = ({ record }: DevelopmentWarningProps) => {
 
   if (loading) return <aha-spinner />
 
-  if (warnings.length === 0) return <span className="text-muted">No warnings</span>
-
   return <>
     <h5>
       Found {warnings.length} development warnings
@@ -72,9 +109,9 @@ export const DevelopmentWarnings = ({ record }: DevelopmentWarningProps) => {
     </h5>
 
     {
-      warnings.map(([r, w], i) => (
-        <Warning record={r} warning={w} key={i} />
-      ))
+      isRelease ?
+        <GroupedWarnings warnings={warnings} /> :
+        <WarningList warnings={warnings} />
     }
 
   </>
