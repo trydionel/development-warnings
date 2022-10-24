@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { groupBy } from 'lodash'
-import { analyzeDevelopmentDetails, DevelopmentWarning, DevelopmentWarningTuple } from "../data/analyzeDevelopmentDetails";
+import { analyzeDevelopmentDetails, DevelopmentWarning, DevelopmentWarningTuple, WarningSettings } from "../data/analyzeDevelopmentDetails";
 import { fetchChildRecords, fetchDevelopmentData } from "../data/fetchDevelopmentDetails";
 
 const WarningLabels: Record<DevelopmentWarning, (record: Aha.RecordUnion) => string> = {
@@ -67,9 +67,10 @@ const GroupedWarnings = ({ warnings }) => {
 
 interface DevelopmentWarningProps {
   record: Aha.RecordUnion | Aha.Release
+  settings: WarningSettings
 }
 
-export const DevelopmentWarnings = ({ record }: DevelopmentWarningProps) => {
+export const DevelopmentWarnings = ({ record, settings }: DevelopmentWarningProps) => {
   const [warnings, setWarnings] = useState<DevelopmentWarningTuple[]>([])
   const [loading, setLoading] = useState<Boolean>(true)
   const isRelease = record.typename === 'Release'
@@ -79,13 +80,13 @@ export const DevelopmentWarnings = ({ record }: DevelopmentWarningProps) => {
       if (isRelease) {
         const features = await fetchChildRecords(record)
         let warnings = features.reduce((arr, f) => {
-          arr.push(...analyzeDevelopmentDetails(f))
+          arr.push(...analyzeDevelopmentDetails(f, settings))
           return arr
         }, [])
         setWarnings(warnings)
       } else {
         await fetchDevelopmentData(record)
-        setWarnings(analyzeDevelopmentDetails(record))
+        setWarnings(analyzeDevelopmentDetails(record, settings))
       }
 
       setLoading(false)

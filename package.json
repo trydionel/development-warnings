@@ -25,6 +25,40 @@
             "Release"
           ]
         }
+      },
+      "settings": {
+        "warningDates": {
+          "title": "Warn on missing dates",
+          "type": "boolean",
+          "default": false,
+          "scope": [
+            "account"
+          ]
+        },
+        "warningEstimates": {
+          "title": "Warn on missing estimates",
+          "type": "boolean",
+          "default": true,
+          "scope": [
+            "account"
+          ]
+        },
+        "warningLate": {
+          "title": "Warn on late delivery",
+          "type": "boolean",
+          "default": true,
+          "scope": [
+            "account"
+          ]
+        },
+        "warningAssignment": {
+          "title": "Warn on unassigned work",
+          "type": "boolean",
+          "default": true,
+          "scope": [
+            "account"
+          ]
+        }
       }
     }
   },
