@@ -18,6 +18,11 @@ export function analyzeDevelopmentDetails(record: Aha.RecordUnion) {
     warnings.push([record, warning])
   }
 
+  // No warnings if the record is closed
+  if (['DONE', 'SHIPPED', 'WONT_DO'].includes(record.teamWorkflowStatus.internalMeaning)) {
+    return []
+  }
+
   if (!record.originalEstimate) {
     warn(DevelopmentWarning.NoEstimate)
   }
