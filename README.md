@@ -1,17 +1,15 @@
 # Development warnings
   
-TODO: Supply a short overview of the functionality the extension brings to Aha! Develop
-This [Aha! Develop](https://www.aha.io/develop/overview) extension enables...
+This [Aha! Develop](https://www.aha.io/develop/overview) extension inspects work records to identify development risks.
 
 It provides these contributions:
 
-TODO: Add a contribution list here. These should briefly describe each of the features provided by this extension.
+* Warnings: A view contribution showing a list of development warnings impacting the record. Available for Releases, Epics, Features, and Requirements.
+* Various settings: Select the warnings that are most relevant for the way you work.
 
 ## Demo
 
-TODO: Add a short .gif screen recording showing some of the highlights of your extension. This can be recorded using a tool like [LICECap](https://www.cockos.com/licecap/).
-
-![demo](demo.gif)
+![demo](res/demo.png)
 
 ## Installing the extension
 
@@ -30,9 +28,8 @@ npm install -g aha-cli
 
 Clone the repo:
 
-TODO: Add the repository URL here
 ```sh
-git clone ...
+git clone https://github.com/trydionel/development-warnings
 ```
 
 **Note: In order to install an extension into your Aha! Develop account, you must be an account administrator.**

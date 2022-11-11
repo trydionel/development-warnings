@@ -105,8 +105,8 @@ export const DevelopmentWarnings = ({ record, settings }: DevelopmentWarningProp
         <aha-tooltip-default-trigger trigger="development-trigger-info" />
         <aha-tooltip placement="bottom" id="development-trigger-info">
           <strong className="mr-2">What is this?</strong>
-          This extension is exploring concepts from <br />
-          https://big.aha.io/features/A-14541. Please send feedback to Jeff.
+          This extension is exploring concepts for identifying
+          at-risk work. Please send feedback to Jeff @ Aha!
         </aha-tooltip>
       </span>
     </h5>
