@@ -15,8 +15,7 @@ It provides these contributions:
 
 **Note: In order to install an extension into your Aha! Develop account, you must be an account administrator.**
 
-TODO: Fill in a link to your built extension package
-Install the Development warnings extension by clicking [here](https://secure.aha.io/settings/account/extensions/install?url=).
+Install the Development warnings extension by clicking [here](https://secure.aha.io/settings/account/extensions/install?url=https://github.com/trydionel/development-warnings/releases/download/v0.1.0/jeff-at-aha.development-warnings-v0.1.0.gz).
 
 ## Working on the extension
 
