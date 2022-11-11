@@ -6,7 +6,8 @@ export enum DevelopmentWarning {
   NoTeam = "NO_TEAM",
   LateStart = "LATE_START",
   PastDue = "PAST_DUE",
-  DelayingLaunch = "DELAYING_LAUNCH"
+  DelayingLaunch = "DELAYING_LAUNCH",
+  OverdueTasks = "OVERDUE_TASKS"
 }
 
 export interface WarningSettings {
@@ -66,6 +67,10 @@ export function analyzeDevelopmentDetails(record: Aha.RecordUnion, settings: War
 
       if (record.release.releaseDate && Date.parse(record.release.releaseDate) < now && record.teamWorkflowStatus.internalMeaning !== 'DONE') {
         warn(DevelopmentWarning.DelayingLaunch)
+      }
+
+      if (record.tasks.length > 0 && record.tasks.some(t => Date.parse(t.dueDate) < now)) {
+        warn(DevelopmentWarning.OverdueTasks)
       }
     }
   }

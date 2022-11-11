@@ -11,7 +11,8 @@ const WarningLabels: Record<DevelopmentWarning, (record: Aha.RecordUnion) => str
   NO_TEAM: (record) => 'is not assigned to a team',
   LATE_START: (record) => `is past its scheduled start date (${record.typename !== 'Requirement' && record.startDate})`,
   PAST_DUE: (record) => `is past its scheduled due date (${record.typename !== 'Requirement' && record.dueDate})`,
-  DELAYING_LAUNCH: (record) => `is past the release launch (${record.release.releaseDate})`
+  DELAYING_LAUNCH: (record) => `is past the release launch (${record.release.releaseDate})`,
+  OVERDUE_TASKS: (record) => `has overdue to-dos`
 }
 
 const Warning = ({ record, children }) => {
@@ -44,7 +45,8 @@ const WarningHeaders: Record<DevelopmentWarning, string> = {
   NO_TEAM: 'No team',
   LATE_START: 'Late to start',
   PAST_DUE: 'Past due',
-  DELAYING_LAUNCH: 'Delaying launch'
+  DELAYING_LAUNCH: 'Delaying launch',
+  OVERDUE_TASKS: 'Overdue to-dos'
 }
 
 const GroupedWarnings = ({ warnings }) => {
