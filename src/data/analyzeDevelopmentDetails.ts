@@ -69,7 +69,7 @@ export function analyzeDevelopmentDetails(record: Aha.RecordUnion, settings: War
         warn(DevelopmentWarning.DelayingLaunch)
       }
 
-      if (record.tasks.length > 0 && record.tasks.some(t => Date.parse(t.dueDate) < now)) {
+      if (record.tasks.length > 0 && record.tasks.some(t => !t.completedDate && Date.parse(t.dueDate) < now)) {
         warn(DevelopmentWarning.OverdueTasks)
       }
     }

@@ -14,7 +14,7 @@ function withDevelopmentDetails(typename, query) {
       iteration: ['id', 'name'],
       release: ['releaseDate'],
       teamWorkflowStatus: ['id', 'name', 'internalMeaning'],
-      tasks: ['id', 'dueDate']
+      tasks: ['id', 'dueDate', 'completedDate']
     })
 }
 
